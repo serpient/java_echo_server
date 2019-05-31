@@ -15,7 +15,7 @@ public class ClientTest {
         String testInput = "Hello";
         BufferedReader inputStream = new BufferedReader(new StringReader(testInput));
         PrintWriter outputStream = new PrintWriter(new StringWriter());
-        MockSocket mockClientSocket = new MockSocket(inputStream, outputStream);
+        SocketWrapper mockClientSocket = new Client(inputStream, outputStream);
 
         assertEquals(testInput, mockClientSocket.readData());
     }
@@ -25,7 +25,7 @@ public class ClientTest {
         String testInput = "Writing To Stream";
         BufferedReader inputStream = new BufferedReader(new StringReader(testInput));
         PrintWriter outputStream = new PrintWriter(new StringWriter());
-        MockSocket mockClientSocket = new MockSocket(inputStream, outputStream);
+        SocketWrapper mockClientSocket = new Client(inputStream, outputStream);
 
         mockClientSocket.sendData(testInput);
         assertEquals(testInput, mockClientSocket.getSentData());

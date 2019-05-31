@@ -19,7 +19,7 @@ public class ServerTest {
         BufferedReader inputStream = new BufferedReader(new StringReader(testInput));
         PrintWriter outputStream = new PrintWriter(new StringWriter());
 
-        SocketWrapper socketWrapper = new MockSocket(inputStream, outputStream);
+        SocketWrapper socketWrapper = new Client(inputStream, outputStream);
         EchoServer echoServer = new EchoServer(socketWrapper);
 
         echoServer.start(port);
