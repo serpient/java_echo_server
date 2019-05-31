@@ -46,8 +46,10 @@ public class EchoServer {
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             clientSocket = serverSocket.accept();
+
             PrintWriter outputStream = new PrintWriter(clientSocket.getOutputStream(), true);
             BufferedReader inputStream = new BufferedReader((new InputStreamReader(clientSocket.getInputStream())));
+
             clientSocketWrapper = new Client(inputStream, outputStream);
         } catch (IOException e) {
             System.err.println(e);
