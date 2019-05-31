@@ -1,10 +1,32 @@
+![gif](https://media.giphy.com/media/MAzusM3FqQzcl4crXq/giphy.gif)
+
 # Echo Server Requirements
 - Echo Server connects to a client
 - Once running, anything typed in the client will be sent to Server
 - Server will echo back the message to the client
 
 # Local Development Setup
-1. Install Java
-2. Install Gradle
-3. Within project folder, run `./gradlew build`
-4.
+### 1. Install Java
+Check if Java is present: `java -version`
+
+If not present, follow these [instructions](https://www.notion.so/Setting-Up-Java-Environment-1a48792fb5c6403bbb430c882e411226#3b7fec7b6e6d4f06a82dca4afcf31081).
+
+### 2. Install Gradle
+`brew install gradle`
+Verify you have it installed with `gradle -v`
+
+### 3. Clone repo
+`git clone https://github.com/serpient/java_echo_server.git`
+
+### 4. Run Build to see reports
+Within project folder, run `./gradlew build` to see the status
+
+### 5. Run the server
+#### Option 1: Default port 1234
+Run `gradle run` to start the server
+
+#### Option 2: Custom post
+Run `gradle run --args='1111'`. Replace '1111' with your own custom port
+
+### 6. Use netcat to interact with server
+Open another terminal and run `nc localhost the_matching_port_number`
