@@ -20,8 +20,8 @@ public class ServerTest {
         MockWriter outputStream = new MockWriter();
         Socket clientSocket = new Socket();
 
-        SocketWrapper socketWrapper = new Client(inputStream, outputStream, clientSocket);
-        EchoServer echoServer = new EchoServer(socketWrapper);
+        Client mockClientSocket = new Client(inputStream, outputStream, clientSocket);
+        EchoServer echoServer = new EchoServer(mockClientSocket);
 
         echoServer.start();
 

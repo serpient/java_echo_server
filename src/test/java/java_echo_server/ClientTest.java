@@ -16,7 +16,7 @@ public class ClientTest {
     private final BufferedReader inputStream = new BufferedReader(new StringReader(testInput));
     private final MockWriter outputStream = new MockWriter();
     private final Socket clientSocket = new Socket();
-    private final SocketWrapper mockClientSocket = new Client(inputStream, outputStream,
+    private final Client mockClientSocket = new Client(inputStream, outputStream,
             clientSocket);
 
     @Test

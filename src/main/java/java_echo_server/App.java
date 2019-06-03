@@ -10,14 +10,14 @@ import java.net.Socket;
 public class App {
     public static void main(String[] args) {
         int portNumber = setPortNumber(args);
-        SocketWrapper clientSocketWrapper = createClientSocketWrapper(portNumber);
+        Client client = createClientSocketWrapper(portNumber);
 
-        EchoServer echoServer = new EchoServer(clientSocketWrapper);
+        EchoServer echoServer = new EchoServer(client);
 
         echoServer.start();
     }
 
-    private static SocketWrapper createClientSocketWrapper(int port) {
+    private static Client createClientSocketWrapper(int port) {
         try {
             ServerSocket serverSocket = new ServerSocket(port);
             Socket clientSocket = serverSocket.accept();
