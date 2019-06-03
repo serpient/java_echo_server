@@ -7,12 +7,10 @@ import java.net.Socket;
 public class Client {
     private final BufferedReader inputStream;
     private final WriterWrapper outputStream;
-    private final Socket clientSocket;
 
-    public Client(BufferedReader input, WriterWrapper output, Socket client) {
+    public Client(BufferedReader input, WriterWrapper output) {
         inputStream = input;
         outputStream = output;
-        clientSocket = client;
     }
 
     public String readData() {
@@ -26,14 +24,5 @@ public class Client {
 
     public void sendData(String data) {
         outputStream.send(data);
-    }
-
-    public void closeClient() {
-        try {
-            System.out.println("The server is shutting down.");
-            clientSocket.close();
-        } catch (IOException e) {
-            System.err.println("The server could not be shut down.");
-        }
     }
 }

@@ -2,6 +2,7 @@ package java_echo_server;
 
 public class EchoServer {
     private final Client clientSocket;
+    private boolean serverState;
 
     public EchoServer(Client clientSocket) {
         this.clientSocket = clientSocket;
@@ -9,10 +10,10 @@ public class EchoServer {
 
     public void start() {
         String inputLine;
-
+        serverState = true;
         while ((inputLine = clientSocket.readData()) != null) {
             if (inputLine.equals("Stop")) {
-                clientSocket.closeClient();
+                serverState = false;
                 break;
             }
 
@@ -21,4 +22,7 @@ public class EchoServer {
         }
     }
 
+    public boolean isRunning() {
+        return serverState;
+    }
 }

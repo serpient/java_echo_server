@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
-import java.net.Socket;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,9 +15,8 @@ public class ServerTest {
 
         BufferedReader inputStream = new BufferedReader(new StringReader(testInput));
         MockWriter outputStream = new MockWriter();
-        Socket clientSocket = new Socket();
 
-        Client mockClientSocket = new Client(inputStream, outputStream, clientSocket);
+        Client mockClientSocket = new Client(inputStream, outputStream);
         EchoServer echoServer = new EchoServer(mockClientSocket);
 
         echoServer.start();
