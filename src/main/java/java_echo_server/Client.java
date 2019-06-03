@@ -3,15 +3,17 @@ package java_echo_server;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.Socket;
 
 public class Client implements SocketWrapper {
-    public BufferedReader inputStream;
-    public PrintWriter outputStream;
-    public String sentData;
+    private final BufferedReader inputStream;
+    private final WriterWrapper outputStream;
+    private final Socket clientSocket;
 
-    public Client(BufferedReader input, PrintWriter output) {
+    public Client(BufferedReader input, WriterWrapper output, Socket client) {
         inputStream = input;
         outputStream = output;
+        clientSocket = client;
     }
 
     public String readData() {
@@ -24,11 +26,15 @@ public class Client implements SocketWrapper {
     }
 
     public void sendData(String data) {
-        sentData = data;
-        outputStream.println(data);
+        outputStream.send(data);
     }
 
-    public String getSentData() {
-        return sentData;
+    public void closeClient() {
+        try {
+            System.out.println("The server is shutting down.");
+            clientSocket.close();
+        } catch (IOException e) {
+            System.err.println("The server could not be shut down.");
+        }
     }
 }
