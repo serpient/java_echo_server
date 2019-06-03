@@ -2,10 +2,9 @@ package java_echo_server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.Socket;
 
-public class Client implements SocketWrapper {
+public class Client {
     private final BufferedReader inputStream;
     private final WriterWrapper outputStream;
     private final Socket clientSocket;
