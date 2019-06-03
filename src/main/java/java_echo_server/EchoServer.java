@@ -1,23 +1,23 @@
 package java_echo_server;
 
 public class EchoServer {
-    private final SocketWrapper clientSocketWrapper;
+    private final Client clientSocket;
 
-    public EchoServer(SocketWrapper socketWrapper) {
-        this.clientSocketWrapper = socketWrapper;
+    public EchoServer(Client clientSocket) {
+        this.clientSocket = clientSocket;
     }
 
     public void start() {
         String inputLine;
 
-        while ((inputLine = clientSocketWrapper.readData()) != null) {
+        while ((inputLine = clientSocket.readData()) != null) {
             if (inputLine.equals("Stop")) {
-                clientSocketWrapper.closeClient();
+                clientSocket.closeClient();
                 break;
             }
 
             String outputLine = "Echo Server: " + inputLine;
-            clientSocketWrapper.sendData(outputLine);
+            clientSocket.sendData(outputLine);
         }
     }
 
