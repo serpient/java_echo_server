@@ -10,9 +10,7 @@ import static org.junit.Assert.assertEquals;
 public class ClientTest {
 
     private final String testInput = "Hello";
-    private final BufferedReader inputStream = new BufferedReader(new StringReader(testInput));
-    private final MockWriter outputStream = new MockWriter();
-    private final Client mockClientSocket = new Client(inputStream, outputStream);
+    private final MockClientSocket mockClientSocket = new MockClientSocket(testInput);
 
     @Test
     public void clientReadsFromStream() {
@@ -23,7 +21,7 @@ public class ClientTest {
     public void clientWritesToStream() {
         mockClientSocket.sendData(testInput);
 
-        assertEquals(testInput, outputStream.getSentData());
+        assertEquals(testInput, mockClientSocket.getSentData());
     }
 
 }
