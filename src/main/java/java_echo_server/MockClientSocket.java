@@ -38,4 +38,6 @@ public class MockClientSocket implements SocketWrapper {
     public void close() {
         return;
     }
+
+    public Boolean ready() { return true; }
 }
