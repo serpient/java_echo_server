@@ -8,4 +8,5 @@ public interface SocketWrapper {
     public String readData();
     public void sendData(String data);
     public void close();
+    public Boolean ready();
 }
