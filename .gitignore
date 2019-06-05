@@ -36,6 +36,7 @@ out/
 
 # Bin & Compiled class files
 bin
+gradle
 
 # Operating System
 .DS_STORE
