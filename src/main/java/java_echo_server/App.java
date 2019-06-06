@@ -7,10 +7,7 @@ public class App {
         public static void main(String args[]) {
             try {
                 ServerSocket serverSocket = new ServerSocket(setPortNumber(args));
-                Thread serverThread = new Thread(
-                        new EchoProtocol(serverSocket),
-                        "SERVER"
-                );
+                Thread serverThread = new Thread(new EchoProtocol(serverSocket), "SERVER");
                 serverThread.start();
             } catch (IOException e) {
                 System.err.println(e.toString());

@@ -1,27 +1,21 @@
 package java_echo_server;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.StringReader;
+import java.io.IOException;
 
 public class MockClientSocket implements SocketWrapper {
-    private final String input;
     private MockWriter mockWriter;
+    private BufferedReader inputStream;
 
     public MockClientSocket(String input) {
-        this.input = input;
+        this.inputStream = new BufferedReader(new StringReader(input));
         this.mockWriter = new MockWriter();
-    }
-
-    public BufferedReader getInput() {
-        return new BufferedReader(new StringReader(input));
-    }
-
-    public WriterWrapper getOutput() {
-        return mockWriter;
     }
 
     public String readData() {
         try {
-            return getInput().readLine();
+            return inputStream.readLine();
         } catch (IOException e) {
             return System.err.toString();
         }
@@ -38,6 +32,4 @@ public class MockClientSocket implements SocketWrapper {
     public void close() {
         return;
     }
-
-    public Boolean ready() { return true; }
 }

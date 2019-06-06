@@ -1,7 +1,10 @@
 package java_echo_server;
 
-import java.io.*;
+import java.io.BufferedReader;
 import java.net.Socket;
+import java.io.PrintWriter;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 public class ClientSocket implements SocketWrapper {
     private final Socket clientSocket;
@@ -13,27 +16,19 @@ public class ClientSocket implements SocketWrapper {
         try {
             Boolean autoFlushWriter = true;
             PrintWriter printWriter = new PrintWriter(clientSocket.getOutputStream(), autoFlushWriter);
-            outputStream = new PrintWriterWrapper(printWriter);
-            inputStream = new BufferedReader((new InputStreamReader(clientSocket.getInputStream())));
+            this.outputStream = new PrintWriterWrapper(printWriter);
+            this.inputStream = new BufferedReader((new InputStreamReader(clientSocket.getInputStream())));
         } catch (IOException e) {
             System.err.println("Could not create input and output stream.");
         }
-    }
-
-    public BufferedReader getInput() {
-        return inputStream;
-    }
-
-    public WriterWrapper getOutput() {
-        return outputStream;
     }
 
     public String readData() {
         try {
             return inputStream.readLine();
         } catch (IOException e) {
-            System.err.println();
-            return System.err.toString();
+            System.err.println(e.toString());
+            return e.toString();
         }
     }
 
@@ -48,15 +43,6 @@ public class ClientSocket implements SocketWrapper {
             clientSocket.close();
         } catch (IOException e) {
             System.err.println(e.toString());
-        }
-    }
-
-    public Boolean ready() {
-        try {
-            return inputStream.ready();
-        } catch (IOException e) {
-            System.err.println(e.toString());
-            return false;
         }
     }
 }
