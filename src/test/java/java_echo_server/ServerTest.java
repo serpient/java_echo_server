@@ -9,23 +9,12 @@ public class ServerTest {
     String testInput = "echo echo echo!";
     String returnedInput = "Echo Server: " + testInput;
     MockClientSocket mockClientSocket = new MockClientSocket(testInput);
-    ServerSocketWrapper mockServerSocket = new MockServerSocket();
-    EchoServer echoServer = new EchoServer(mockClientSocket, mockServerSocket);
+    EchoSession echoSession = new EchoSession(mockClientSocket);
 
-//    @Ignore("Infinity Loop")
-    @Test
-    public void serverStops() {
-        echoServer.start();
-        echoServer.stop();
-        assertEquals(echoServer.serverIsRunning(), false);
-    }
-
-
-    @Ignore("Infinity Loop")
     @Test
     public void serverEchosClientInput() {
-        echoServer.start();
+        echoSession.run();
         assertEquals(returnedInput, mockClientSocket.getSentData());
-        echoServer.stop();
+        echoSession.close();
     }
 }

@@ -43,12 +43,11 @@ public class ClientSocket implements SocketWrapper {
 
     public void close() {
         try {
-            System.out.println("closing client socket");
             inputStream.close();
             outputStream.close();
             clientSocket.close();
         } catch (IOException e) {
-            System.err.println("Could not close client socket.");
+            System.err.println(e.toString());
         }
     }
 

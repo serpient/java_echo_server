@@ -2,49 +2,40 @@ package java_echo_server;
 
 public class EchoSession implements Runnable {
     private final SocketWrapper client;
+    private Boolean isRunning;
 
     public EchoSession(SocketWrapper client) {
         this.client = client;
+        this.isRunning = true;
     }
 
     public void run() {
-        String inputLine;
-        while (!Thread.interrupted()) {
+        while (!Thread.interrupted() && isRunning) {
             if (!client.ready()) {
                 try {
                     Thread.sleep(1000);
                     continue;
                 } catch (InterruptedException e) {
-                    client.close();
-                    System.err.println("Disconnecting client.");
+                    close();
                     return;
                 }
             }
-            inputLine = client.readData();
+            String inputLine = client.readData();
             if (inputLine.equals("Stop")) {
-                break;
+                close();
             } else {
                 String outputLine = "Echo Server: " + inputLine;
                 client.sendData(outputLine);
+                System.out.println(outputLine);
+                close();
             }
         }
+        return;
+    }
+
+    public void close() {
+        client.close();
+        isRunning = false;
+        System.out.println("Disconnecting client.");
     }
 }
-
-// 2 different threads can access the same server in memory
-// data sharing between threads
-// gotta be careful where server.start(), and server.stop() is called immediately
-// then its a race condition
-
-// to not make it a race condition
-// semiphores ? signaling?
-// then use another thread to stop that thread
-
-// or busy loop until server is started
-// then set up signals with variables
-// once the ENUMS state clears in a test condition
-// then call server STOP
-
-// or another way is to be more explicit
-// can the test framework
-
