@@ -36,6 +36,5 @@ public class EchoProtocol implements Runnable {
                 threadMessage(e.toString());
             }
         }
-
     }
 }
