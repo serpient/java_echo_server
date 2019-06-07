@@ -1,6 +1,9 @@
 package java_echo_server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Random;
@@ -23,7 +26,14 @@ public class EchoProtocol implements Runnable {
             Socket clientSocket;
             try {
                 clientSocket = server.accept();
-                ClientSocket clientSocketWrapper = new ClientSocket(clientSocket);
+
+                Boolean autoFlushWriter = true;
+                PrintWriter printWriter = new PrintWriter(clientSocket.getOutputStream(), autoFlushWriter);
+                WriterWrapper outputStream = new PrintWriterWrapper(printWriter);
+                BufferedReader inputStream = new BufferedReader((new InputStreamReader(clientSocket.getInputStream())));
+
+                ClientSocket clientSocketWrapper = new ClientSocket(clientSocket, inputStream, outputStream);
+
                 EchoSession echoSession = new EchoSession(clientSocketWrapper);
 
                 String threadName = "CLIENT_SESSION_" + new Random().nextInt(5000);

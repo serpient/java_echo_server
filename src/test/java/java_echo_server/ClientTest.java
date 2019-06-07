@@ -4,24 +4,28 @@ import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.StringReader;
+import java.net.Socket;
 
 import static org.junit.Assert.assertEquals;
 
 public class ClientTest {
 
     private final String testInput = "Hello";
-    private final MockClientSocket mockClientSocket = new MockClientSocket(testInput);
+    Socket mockClient = new Socket();
+    BufferedReader input = new BufferedReader(new StringReader(testInput));
+    MockWriter output = new MockWriter();
+    private final ClientSocket clientSocket = new ClientSocket(mockClient, input, output);
 
     @Test
     public void clientReadsFromStream() {
-        assertEquals(testInput, mockClientSocket.readData());
+        assertEquals(testInput, clientSocket.readData());
     }
 
     @Test
     public void clientWritesToStream() {
-        mockClientSocket.sendData(testInput);
+        clientSocket.sendData(testInput);
 
-        assertEquals(testInput, mockClientSocket.getSentData());
+        assertEquals(testInput, output.getSentData());
     }
 
 }

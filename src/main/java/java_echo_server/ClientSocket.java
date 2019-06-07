@@ -2,8 +2,6 @@ package java_echo_server;
 
 import java.io.BufferedReader;
 import java.net.Socket;
-import java.io.PrintWriter;
-import java.io.InputStreamReader;
 import java.io.IOException;
 
 public class ClientSocket implements SocketWrapper {
@@ -11,16 +9,14 @@ public class ClientSocket implements SocketWrapper {
     private BufferedReader inputStream;
     private WriterWrapper outputStream;
 
-    public ClientSocket(Socket clientSocket) {
+    public ClientSocket(
+            Socket clientSocket,
+            BufferedReader inputStream,
+            WriterWrapper outputStream
+    ) {
         this.clientSocket = clientSocket;
-        try {
-            Boolean autoFlushWriter = true;
-            PrintWriter printWriter = new PrintWriter(clientSocket.getOutputStream(), autoFlushWriter);
-            this.outputStream = new PrintWriterWrapper(printWriter);
-            this.inputStream = new BufferedReader((new InputStreamReader(clientSocket.getInputStream())));
-        } catch (IOException e) {
-            System.err.println("Could not create input and output stream.");
-        }
+        this.inputStream = inputStream;
+        this.outputStream = outputStream;
     }
 
     public String readData() {
