@@ -30,3 +30,13 @@ Run `gradle run --args='1111'`. Replace '1111' with your own custom port
 
 ### 6. Use netcat to interact with server
 Open another terminal and run `nc localhost the_matching_port_number`
+
+# Testing Multiple Requests
+- To test the simultaneous client sessions with a benchmark, start App.main() and then run `ab -r -n 5000 -c 1000
+http://localhost:1234/` in another terminal.
+
+- To test the simultaneous client sessions in a real life session, start App.main() and then open at least 2 terminals
+and run `nc localhost 1234`. From here, you can type an input, and the session should echo back your input and then close itself.
+
+### Benchmark Result of 1500 Simultaneous Requests with Apache AB
+![benchmark](https://user-images.githubusercontent.com/29721784/59047037-f5354a80-8837-11e9-94d1-ca5ef7e59160.png)

@@ -2,25 +2,18 @@ package java_echo_server;
 
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.StringReader;
-
 import static org.junit.Assert.assertEquals;
 
 public class ServerTest {
+    String testInput = "echo echo echo!";
+    String returnedInput = "Echo Server: " + testInput;
+    MockClientSocket mockClientSocket = new MockClientSocket(testInput);
+    EchoSession echoSession = new EchoSession(mockClientSocket);
+
     @Test
     public void serverEchosClientInput() {
-        String testInput = "echo echo echo!";
-        String returnedInput = "Echo Server: " + testInput;
-
-        BufferedReader inputStream = new BufferedReader(new StringReader(testInput));
-        MockWriter outputStream = new MockWriter();
-
-        Client mockClientSocket = new Client(inputStream, outputStream);
-        EchoServer echoServer = new EchoServer(mockClientSocket);
-
-        echoServer.start();
-
-        assertEquals(returnedInput, outputStream.getSentData());
+        echoSession.run();
+        assertEquals(returnedInput, mockClientSocket.getSentData());
+        echoSession.close();
     }
 }

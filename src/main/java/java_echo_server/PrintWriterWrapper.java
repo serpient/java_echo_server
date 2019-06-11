@@ -11,4 +11,5 @@ public class PrintWriterWrapper implements WriterWrapper {
     public void send(String data) {
        printWriter.println(data);
     }
+    public void close() { printWriter.close(); }
 }
